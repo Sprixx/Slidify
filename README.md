@@ -1,0 +1,1 @@
+This repository contains my pitch presentation for the slidify assignment for coursera
