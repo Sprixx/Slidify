@@ -1,0 +1,68 @@
+---
+title       : Predicting with mpg
+subtitle    : Prediction other car properties based on miles per gallon 
+author      : Sprixx
+job         : Course Project
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [bootstrap, quiz]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- bg:lightblue
+
+## The need to predict with mpg
+
+Welcome to the pitch of my shiny app.
+
+A lot of properties of a car are correlated with the miles per gallon variable.
+
+It can therefore be interesting to investigate the effect of miles per gallon on these variables individually.
+
+Questions like: how much more or less horsepower does a car have which has 30 miles to the gallon instead of 20 miles to the gallon ceteris paribus are interesting questions when buying a car.
+
+This app makes it fast, easy and most of all fun to investigate this kind of linear relationships.
+
+--- bg:lightblue
+
+## The shiny application input
+
+The first thing that should be selected in the app is the variable which you want to predict with mpg, using the drop down menu.
+The application next fits a linear regression line between mpg and your selected variables, plots this and provides the coefficients of the regression. Note that the color depends on the number of cylinders. 
+
+Next you are able to make a prediction by setting mpg using the slider bar. The predicted value is next shown based on the coefficients of the regression model and is also visible in the plot: the red dot and the vertical and horizontal line in this red dot.
+
+If you for example select the wt (weight) variable and set mpg equal to 25 the following is predicted for weight:
+```{r}
+coef(lm(mtcars$wt~mtcars$mpg))[1]+coef(lm(mtcars$wt~mtcars$mpg))[2]*25
+```
+
+--- bg:lightblue
+
+## The calculation and output
+This result can also be seen in the plot using the following code:
+
+```{r,echo=TRUE,fig.height=3,fig.width=12}
+plot(mtcars[,c(1,6)],col = mtcars$cyl, pch = 20,cex=2)
+        abline(lm(mtcars[, c("wt")]~mtcars[, c("mpg")]))
+        abline(v=25)
+        abline(h=(coef(lm(mtcars$wt~mtcars$mpg))[1]+coef(lm(mtcars$wt~mtcars$mpg))[2]*25))
+        points(25,(coef(lm(mtcars$wt~mtcars$mpg))[1]+coef(lm(mtcars$wt~mtcars$mpg))[2]*25),col="red",pch=20,cex=4)
+```
+
+--- &radio
+
+## Final Questions
+
+Based on the previous plot, should I buy a heavy or light car?
+
+1. A light car
+
+2. A heavy car
+
+3. _This depends on the looks of the car, the performance of the car, the price of the car, the amount of money I have, the number of kids I can fit, the brand, and much more. Miles per gallon only is a small portion of the decision about buying a car_
+
+*** .hint How do you buy a car?
+
+*** .explanation It is an illustrative simple shiny app, and will not be very applicable in real life. Secondly, the used data set is very old.
+
